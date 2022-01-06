@@ -898,7 +898,7 @@ def syslog(message, alerttype):
             # Send syslog UDP packet to given host and port.
             sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             data = '<%d>%s' % (level + facility * 8, message + "\n")
-            sock.sendto(data, (host, port))
+            sock.sendto(data.encode("ascii"), (host, port))
             sock.close()
 
         # send the syslog message
@@ -1131,7 +1131,7 @@ def format_ips(url):
                     write_log(final_msg)
                 if is_posix():
                     write_log(
-                        "Received URL Error trying to download feed from '%s', Reason: %s" (urls, format(err)),1)
+                        "Received URL Error trying to download feed from '%s', Reason: %s" % (urls, format(err)),1)
 
     try:
         if is_windows():
